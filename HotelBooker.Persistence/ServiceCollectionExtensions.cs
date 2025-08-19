@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HotelBooker.Persistence
@@ -11,6 +12,10 @@ namespace HotelBooker.Persistence
             IConfiguration configuration
         )
         {
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("Default"))
+            );
+
             return services;
         }
     }
