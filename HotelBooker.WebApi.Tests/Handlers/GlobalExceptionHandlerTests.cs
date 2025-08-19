@@ -1,8 +1,6 @@
-﻿using System.Text.Json;
-using HotelBooker.CommonTests;
+﻿using HotelBooker.CommonTests;
 using HotelBooker.WebApi.Handlers;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;

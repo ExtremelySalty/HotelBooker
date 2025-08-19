@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HotelBooker.Application.Interfaces.Repositories;
+using HotelBooker.Persistence.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,6 +17,9 @@ namespace HotelBooker.Persistence
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("Default"))
             );
+
+            services
+                .AddScoped<ISeedData, SeedDataRepository>();
 
             return services;
         }
