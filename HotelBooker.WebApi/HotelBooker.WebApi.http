@@ -1,6 +1,11 @@
 @HotelBooker.WebApi_HostAddress = http://localhost:5272
 
-GET {{HotelBooker.WebApi_HostAddress}}/weatherforecast/
+GET {{HotelBooker.WebApi_HostAddress}}/api/version
+Accept: application/json
+
+###
+
+GET {{HotelBooker.WebApi_HostAddress}}/health
 Accept: application/json
 
 ###

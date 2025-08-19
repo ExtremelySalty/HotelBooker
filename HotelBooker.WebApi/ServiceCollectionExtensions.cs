@@ -1,5 +1,6 @@
 ﻿using HotelBooker.Application;
 using HotelBooker.Persistence;
+using HotelBooker.WebApi.Option;
 
 namespace HotelBooker.WebApi
 {
@@ -24,6 +25,8 @@ namespace HotelBooker.WebApi
             IConfiguration configuration
         )
         {
+            services.Configure<ApplicationInfo>(configuration.GetSection(ApplicationInfo.SectionName));
+
             return services;
         }
     }
