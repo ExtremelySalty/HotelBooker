@@ -1,6 +1,7 @@
 using System.Net.Mime;
 using HotelBooker.Persistence;
 using HotelBooker.WebApi;
+using HotelBooker.WebApi.Handlers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
 
@@ -35,6 +36,10 @@ builder
 
 builder
     .Services
+    .AddExceptionHandler<GlobalExceptionHandler>();
+
+builder
+    .Services
     .ConfigureProjects(builder.Configuration)
     .ConfigureOptions(builder.Configuration);
 
@@ -46,6 +51,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseExceptionHandler();
 
 app.UseHealthChecks("/health");
 
