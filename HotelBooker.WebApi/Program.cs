@@ -1,4 +1,5 @@
 using System.Net.Mime;
+using HotelBooker.Persistence;
 using HotelBooker.WebApi;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.OpenApi.Models;
@@ -25,7 +26,8 @@ builder.Services.AddSwaggerGen(action =>
 
 builder
     .Services
-    .AddHealthChecks();
+    .AddHealthChecks()
+    .AddDbContextCheck<ApplicationDbContext>();
 
 builder
     .Services
