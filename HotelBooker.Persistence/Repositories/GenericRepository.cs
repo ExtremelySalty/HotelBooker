@@ -42,6 +42,10 @@ namespace HotelBooker.Persistence.Repositories
                     .Includes
                     .Aggregate(queryable, (current, include) => current.Include(include));
 
+                queryable = request.Specification
+                    .ThenIncludes
+                    .Aggregate(queryable, (current, include) => current.Include(include));
+
                 var totalItems = await queryable.CountAsync(ct);
 
                 if (request.Specification.OrderBy is not null)

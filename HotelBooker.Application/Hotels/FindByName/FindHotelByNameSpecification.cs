@@ -9,6 +9,7 @@ namespace HotelBooker.Application.Hotels.FindByName
         {
             AddFilter(x => x.Name.Contains(name));
             AddInclude(x => x.Rooms);
+            AddThenInclude("Rooms.RoomType");
             SetOrderBy(x => x.Name);
         }
     }

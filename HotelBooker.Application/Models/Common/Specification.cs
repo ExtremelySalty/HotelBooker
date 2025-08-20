@@ -8,12 +8,14 @@ namespace HotelBooker.Application.Models.Common
         private Expression<Func<TEntity, object>>? _orderBy;
         private Expression<Func<TEntity, object>>? _orderByDescending;
         private List<Expression<Func<TEntity, object>>> _includes = [];
+        private List<string> _thenIncludes = [];
 
         public Expression<Func<TEntity, bool>>? Filter => _filter;
         public Expression<Func<TEntity, object>>? OrderBy => _orderBy;
         public Expression<Func<TEntity, object>>? OrderByDescending => _orderByDescending;
         public IReadOnlyCollection<Expression<Func<TEntity, object>>> Includes
             => _includes.AsReadOnly();
+        public IReadOnlyCollection<string> ThenIncludes => _thenIncludes.AsReadOnly();
 
         protected void AddFilter(Expression<Func<TEntity, bool>> filter)
             => _filter = filter;
@@ -26,5 +28,8 @@ namespace HotelBooker.Application.Models.Common
 
         protected void AddInclude(Expression<Func<TEntity, object>> include)
             => _includes.Add(include);
+
+        protected void AddThenInclude(string thenInclude)
+            => _thenIncludes.Add(thenInclude);
     }
 }

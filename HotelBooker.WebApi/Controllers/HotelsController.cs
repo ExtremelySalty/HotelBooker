@@ -29,7 +29,7 @@ namespace HotelBooker.WebApi.Controllers
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> GetHotelsAsync
         (
-            HotelQueryParams queryParams,
+            [FromQuery] HotelQueryParams queryParams,
             CancellationToken ct
         )
         {
