@@ -14,13 +14,13 @@ namespace HotelBooker.WebApi.Tests.Integration.Hotels
         private HttpClient _httpClient;
 
         [OneTimeSetUp]
-        public void Version_OneTimeSetUp()
+        public void GetHotels_OneTimeSetUp()
         {
             _httpClient = CreateClient();
         }
 
         [OneTimeTearDown]
-        public void Version_OneTimeTearDown()
+        public void GetHotels_OneTimeTearDown()
         {
             _httpClient.Dispose();
         }
