@@ -35,7 +35,11 @@ This project has been created in order to allow users to book a hotel room. This
 * Language: C#
 * ORM: EntityFrameworkCore (v8)
 * Database Provider: Sql Server
-* TestContainers: this libraryis used for the testing of the Categories of Repository and Integration
+* NUnit: testing framework
+* TestContainers: this library is used for the testing of the Categories of Repository and Integration
+* Shouldly: used for the assertions for the tests
+* NSubstitute: used for mocking interfaces
+* Bogus: used for generating test data in the tests as well as the seed data
 
 ## How to run
 
@@ -43,3 +47,13 @@ This project has been created in order to allow users to book a hotel room. This
 2. Add DB connection string to the appsettings
 3. Press run
 4. On swagger hit the api/data/seed endpoint to create and populate the DB (pass in the optional param max 60 to generate custom amount of data. Default is 10)
+
+
+## Test runner
+
+The tests are split by the following Categories:
+* Unit: for purely code only testing IE using mocks and simulating
+* Repository: for testing the different repositories against a DB
+* Integration: using the WebApplicationFactory to test in process the project
+
+Please be aware that in order for the Repository and Integration tests to run you will need to have either Podman or Docker installed as these use the TestContainers library to test against a Sql Server DB and not an InMemory substitute. If you do not have either of these installed unselect these Categories from the Test runner screen or they will fail.
