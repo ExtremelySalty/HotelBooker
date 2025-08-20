@@ -2,7 +2,7 @@
 {
     public interface ISeedData
     {
-        Task SeedAsync(CancellationToken ct);
+        Task SeedAsync(int hotelsToSeed, CancellationToken ct);
         Task ResetAsync(CancellationToken ct);
     }
 }

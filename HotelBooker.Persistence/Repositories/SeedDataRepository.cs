@@ -1,5 +1,6 @@
 ﻿using HotelBooker.Application.Interfaces.Repositories;
 using HotelBooker.Domain.Models;
+using HotelBooker.Persistence.DataSeeding;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -40,7 +41,7 @@ namespace HotelBooker.Persistence.Repositories
             }
         }
 
-        public async Task SeedAsync(CancellationToken ct)
+        public async Task SeedAsync(int hotelsToSeed, CancellationToken ct)
         {
             try
             {
@@ -48,7 +49,7 @@ namespace HotelBooker.Persistence.Repositories
 
                 await _context.Database.EnsureCreatedAsync(ct);
                 await _context.AddRangeAsync(roomTypes, cancellationToken: ct);
-                await _context.AddRangeAsync(GenerateHotels(roomTypes), cancellationToken: ct);
+                await _context.AddRangeAsync(GenerateHotels(hotelsToSeed), cancellationToken: ct);
                 await _context.AddRangeAsync(GenerateCustomers(), cancellationToken: ct);
                 await _context.SaveChangesAsync(ct);
             }
@@ -67,189 +68,11 @@ namespace HotelBooker.Persistence.Repositories
                 new RoomType() { Name = "Deluxe" }
             ];
 
-        private static List<Hotel> GenerateHotels(List<RoomType> roomTypes)
+        private static List<Hotel> GenerateHotels(int hotelsToSeed)
         {
-            var hotelOne = new Hotel
-            {
-                Name = "Central Grand Hotel",
-                Location = "Glasgow",
-                Code = "CGH"
-            };
-            hotelOne.Rooms.AddRange
-            (
-                [
-                    new Room
-                    {
-                        Number = "101",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelOne
-                    },
-                    new Room
-                    {
-                        Number = "102",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelOne
-                    },
-                    new Room
-                    {
-                        Number = "201",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelOne
-                    },
-                    new Room
-                    {
-                        Number = "202",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelOne
-                    },
-                    new Room
-                    {
-                        Number = "301",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelOne
-                    },
-                    new Room
-                    {
-                        Number = "302",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelOne
-                    }
-                ]
-            );
-
-            var hotelTwo = new Hotel
-            {
-                Name = "Malmaison",
-                Location = "Dundee",
-                Code = "MAL"
-            };
-            hotelOne.Rooms.AddRange
-            (
-                [
-                    new Room
-                    {
-                        Number = "101",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelTwo
-                    },
-                    new Room
-                    {
-                        Number = "102",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelTwo
-                    },
-                    new Room
-                    {
-                        Number = "201",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelTwo
-                    },
-                    new Room
-                    {
-                        Number = "202",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelTwo
-                    },
-                    new Room
-                    {
-                        Number = "301",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelTwo
-                    },
-                    new Room
-                    {
-                        Number = "302",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelTwo
-                    }
-                ]
-            );
-
-            var hotelThree = new Hotel
-            {
-                Name = "The Balmoral",
-                Location = "Edinburgh",
-                Code = "BAL"
-            };
-            hotelOne.Rooms.AddRange
-            (
-                [
-                    new Room
-                    {
-                        Number = "101",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelThree
-                    },
-                    new Room
-                    {
-                        Number = "102",
-                        Description = "Single room with a view",
-                        MaxCapacity = 2,
-                        RoomType = roomTypes[0],
-                        Hotel = hotelThree
-                    },
-                    new Room
-                    {
-                        Number = "201",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelThree
-                    },
-                    new Room
-                    {
-                        Number = "202",
-                        Description = "Double room with a balcony",
-                        MaxCapacity = 4,
-                        RoomType = roomTypes[1],
-                        Hotel = hotelThree
-                    },
-                    new Room
-                    {
-                        Number = "301",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelThree
-                    },
-                    new Room
-                    {
-                        Number = "302",
-                        Description = "Deluxe room with a butler and bar service",
-                        MaxCapacity = 6,
-                        RoomType = roomTypes[2],
-                        Hotel = hotelThree
-                    }
-                ]
-            );
-
-            return [hotelOne, hotelTwo, hotelThree];
+            var roomFaker = new RoomFaker(1297, [1,2,3]);
+            var hotelFaker = new HotelFaker(1297, roomFaker);
+            return hotelFaker.Generate(hotelsToSeed);
         }
 
         private static List<Customer> GenerateCustomers()

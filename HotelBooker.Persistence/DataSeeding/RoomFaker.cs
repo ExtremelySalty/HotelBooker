@@ -1,0 +1,21 @@
+﻿using Bogus;
+using HotelBooker.Domain.Models;
+
+namespace HotelBooker.Persistence.DataSeeding
+{
+    internal class RoomFaker : Faker<Room>
+    {
+        public RoomFaker
+        (
+            int seed,
+            IEnumerable<int> roomTypeIds
+        )
+        {
+            UseSeed(seed)
+                .RuleFor(r => r.Number, f => f.Random.Number(600).ToString())
+                .RuleFor(r => r.RoomTypeId, f => f.PickRandom(roomTypeIds))
+                .RuleFor(r => r.Description, f => f.Lorem.Sentence().OrNull(f))
+                .RuleFor(r => r.MaxCapacity, f => f.Random.Number(1, 6));
+        }
+    }
+}
