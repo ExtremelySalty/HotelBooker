@@ -9,7 +9,7 @@ namespace HotelBooker.CommonTests.Fakers
         {
             UseSeed(seed)
                 .RuleFor(h => h.Name, f => f.Company.CompanyName())
-                .RuleFor(h => h.Code, f => f.Random.String2(1, 3))
+                .RuleFor(h => h.Code, f => f.Random.String2(5, 15))
                 .RuleFor(h => h.Location, f => f.Address.City());
         }
     }
