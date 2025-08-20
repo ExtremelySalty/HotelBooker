@@ -19,7 +19,8 @@ namespace HotelBooker.Persistence
             );
 
             services
-                .AddScoped<ISeedData, SeedDataRepository>();
+                .AddScoped<ISeedData, SeedDataRepository>()
+                .AddScoped<IHotelRepository, HotelRepository>();
 
             return services;
         }
