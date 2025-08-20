@@ -57,3 +57,7 @@ The tests are split by the following Categories:
 * Integration: using the WebApplicationFactory to test in process the project
 
 Please be aware that in order for the Repository and Integration tests to run you will need to have either Podman or Docker installed as these use the TestContainers library to test against a Sql Server DB and not an InMemory substitute. If you do not have either of these installed unselect these Categories from the Test runner screen or they will fail.
+
+## Aspire Support
+
+This app does have Aspire support. It will spin up the project and the sql server for you if you set the App.Host as the start up project. In order to seed the data you will still need to naviagte to the swagger and hit the api/data/seed end point as detailed above. No need to add any conneciton strings Aspire will handle it for you. You do need to have Docker or Podman installed in order to use this feature though
