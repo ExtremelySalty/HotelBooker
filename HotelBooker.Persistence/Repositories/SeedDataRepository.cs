@@ -48,9 +48,19 @@ namespace HotelBooker.Persistence.Repositories
                 var roomTypes = GenerateRoomTypes();
 
                 await _context.Database.EnsureCreatedAsync(ct);
-                await _context.AddRangeAsync(roomTypes, cancellationToken: ct);
-                await _context.AddRangeAsync(GenerateHotels(hotelsToSeed), cancellationToken: ct);
-                await _context.AddRangeAsync(GenerateCustomers(), cancellationToken: ct);
+                if (await _context.RoomTypes.AnyAsync(ct) == false)
+                {
+                    await _context.AddRangeAsync(roomTypes, cancellationToken: ct);
+                    await _context.SaveChangesAsync(ct);
+                }
+                if (await _context.Hotels.AnyAsync(ct) == false)
+                {
+                    await _context.AddRangeAsync(GenerateHotels(hotelsToSeed, roomTypes.Select(x => x.Id)), cancellationToken: ct);
+                }
+                if(await _context.Customers.AnyAsync(ct) == false)
+                {
+                    await _context.AddRangeAsync(GenerateCustomers(), cancellationToken: ct);
+                }
                 await _context.SaveChangesAsync(ct);
             }
             catch (Exception ex)
@@ -68,9 +78,9 @@ namespace HotelBooker.Persistence.Repositories
                 new RoomType() { Name = "Deluxe" }
             ];
 
-        private static List<Hotel> GenerateHotels(int hotelsToSeed)
+        private static List<Hotel> GenerateHotels(int hotelsToSeed, IEnumerable<int> roomTypes)
         {
-            var roomFaker = new RoomFaker(1297, [1,2,3]);
+            var roomFaker = new RoomFaker(1297, roomTypes);
             var hotelFaker = new HotelFaker(1297, roomFaker);
             return hotelFaker.Generate(hotelsToSeed);
         }
