@@ -56,12 +56,15 @@ namespace HotelBooker.Persistence.Tests.Repositories
         [Order(1)]
         public async Task SeedDataAsync_WhenCalled_ShouldAddTestData()
         {
-            // Arrange & Act
-            await _repository.SeedAsync(CancellationToken.None);
+            // Arrange
+            var amountToSeed = 10;
+
+            // Act
+            await _repository.SeedAsync(amountToSeed, CancellationToken.None);
 
             // Assert
-            var dataExists = await _context.Hotels.AnyAsync();
-            dataExists.ShouldBeTrue();
+            var hotelCount = await _context.Hotels.CountAsync();
+            hotelCount.ShouldBe(amountToSeed);
         }
 
         [Test]

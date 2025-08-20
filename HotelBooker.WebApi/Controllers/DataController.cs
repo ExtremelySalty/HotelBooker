@@ -13,9 +13,16 @@ namespace HotelBooker.WebApi.Controllers
             => _seedData = seedData;
 
         [HttpPost("seed")]
-        public async Task<IActionResult> SeedDataAsync(CancellationToken ct)
+        public async Task<IActionResult> SeedDataAsync
+        (
+            CancellationToken ct,
+            [FromQuery] int ammount = 10
+        )
         {
-            await _seedData.SeedAsync(ct);
+            if (ammount < 1 || ammount > 60)
+                return BadRequest();
+
+            await _seedData.SeedAsync(ammount, ct);
             return Ok("Data seeded successfully.");
         }
 
