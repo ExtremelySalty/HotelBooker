@@ -21,6 +21,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooker.Persistence.Tes
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooker.WebApi.Tests", "HotelBooker.WebApi.Tests\HotelBooker.WebApi.Tests.csproj", "{1F1D51CC-DF6E-4EE9-B069-36216CC87857}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooker.AppHost", "HotelBooker.AppHost\HotelBooker.AppHost.csproj", "{A0969043-475F-4BB0-9C54-B7329B387ACB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotelBooker.ServiceDefaults", "HotelBooker.ServiceDefaults\HotelBooker.ServiceDefaults.csproj", "{54C49A13-8C6A-EF17-5360-A808EFF5613A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +63,14 @@ Global
 		{1F1D51CC-DF6E-4EE9-B069-36216CC87857}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1F1D51CC-DF6E-4EE9-B069-36216CC87857}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1F1D51CC-DF6E-4EE9-B069-36216CC87857}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0969043-475F-4BB0-9C54-B7329B387ACB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0969043-475F-4BB0-9C54-B7329B387ACB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0969043-475F-4BB0-9C54-B7329B387ACB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0969043-475F-4BB0-9C54-B7329B387ACB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54C49A13-8C6A-EF17-5360-A808EFF5613A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54C49A13-8C6A-EF17-5360-A808EFF5613A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54C49A13-8C6A-EF17-5360-A808EFF5613A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54C49A13-8C6A-EF17-5360-A808EFF5613A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

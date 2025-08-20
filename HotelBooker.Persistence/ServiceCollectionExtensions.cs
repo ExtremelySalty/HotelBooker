@@ -15,7 +15,7 @@ namespace HotelBooker.Persistence
         )
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("Default"))
+                options.UseSqlServer(configuration.GetConnectionString("ApiHotelBoooker"))
             );
 
             services

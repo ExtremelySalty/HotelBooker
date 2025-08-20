@@ -7,6 +7,8 @@ using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.AddServiceDefaults();
+
 builder.WebHost.ConfigureKestrel(config => config.AddServerHeader = false);
 builder.Services.AddRouting(config => config.LowercaseUrls = true);
 builder.Services.AddControllers(config =>
@@ -44,6 +46,8 @@ builder
     .ConfigureOptions(builder.Configuration);
 
 var app = builder.Build();
+
+app.MapDefaultEndpoints();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

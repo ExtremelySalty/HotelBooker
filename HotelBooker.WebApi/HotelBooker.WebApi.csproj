@@ -18,6 +18,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HotelBooker.Application\HotelBooker.Application.csproj" />
     <ProjectReference Include="..\HotelBooker.Persistence\HotelBooker.Persistence.csproj" />
+    <ProjectReference Include="..\HotelBooker.ServiceDefaults\HotelBooker.ServiceDefaults.csproj" />
   </ItemGroup>
 
 </Project>
