@@ -8,14 +8,12 @@ namespace HotelBooker.CommonTests.Fakers
         public RoomFaker
         (
             int seed,
-            IEnumerable<int> roomTypeIds,
-            int hotelId
+            IEnumerable<int> roomTypeIds
         )
         {
             UseSeed(seed)
                 .RuleFor(r => r.Number, f => f.Random.Number(600).ToString())
                 .RuleFor(r => r.RoomTypeId, f => f.PickRandom(roomTypeIds))
-                .RuleFor(r => r.HotelId, f => hotelId)
                 .RuleFor(r => r.Description, f => f.Lorem.Sentence().OrNull(f))
                 .RuleFor(r => r.MaxCapacity, f => f.Random.Number(1, 6));
         }

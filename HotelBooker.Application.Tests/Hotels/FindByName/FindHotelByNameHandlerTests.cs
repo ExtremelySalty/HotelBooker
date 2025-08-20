@@ -65,7 +65,8 @@ namespace HotelBooker.Application.Tests.Hotels.FindByName
 
         private static List<Hotel> GenerateHotels(int howMany)
         {
-            var hotelFaker = new HotelFaker(1297);
+            var roomFaker = new RoomFaker(1291, [1, 2, 3]);
+            var hotelFaker = new HotelFaker(1297, roomFaker);
             return hotelFaker.Generate(howMany);
         }
     }

@@ -115,14 +115,9 @@ namespace HotelBooker.Persistence.Tests.Repositories
 
         private List<Hotel> GenerateHotels()
         {
-            _hotelFaker = new HotelFaker(_seed);
-            var hotels = _hotelFaker.Generate(_hotelsToGenerate);
-            foreach(var hotel in hotels)
-            {
-                _roomFaker = new RoomFaker(_seed, [1,2,3], hotel.Id);
-                hotel.Rooms = _roomFaker.Generate(6);
-            }
-            return hotels;
+            _roomFaker = new RoomFaker(_seed, [1,2,3]);
+            _hotelFaker = new HotelFaker(_seed, _roomFaker);
+            return _hotelFaker.Generate(_hotelsToGenerate);
         }
     }
 }
