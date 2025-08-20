@@ -30,4 +30,16 @@ This project has been created in order to allow users to book a hotel room. This
 * Have ability to seed and reset data for testing purposes
 * API does not need authentication
 
-  
+## Technologies used
+
+* Language: C#
+* ORM: EntityFrameworkCore (v8)
+* Database Provider: Sql Server
+* TestContainers: this libraryis used for the testing of the Categories of Repository and Integration
+
+## How to run
+
+1. Clone repo
+2. Add DB connection string to the appsettings
+3. Press run
+4. On swagger hit the api/data/seed endpoint to create and populate the DB (pass in the optional param max 60 to generate custom amount of data. Default is 10)
