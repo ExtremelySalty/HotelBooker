@@ -6,6 +6,12 @@ namespace HotelBooker.Application
     {
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
+            services
+                .AddMediatR(config =>
+                {
+                    config.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly);
+                });
+
             return services;
         }
     }
