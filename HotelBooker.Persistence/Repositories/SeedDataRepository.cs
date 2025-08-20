@@ -1,5 +1,6 @@
 ﻿using HotelBooker.Application.Interfaces.Repositories;
 using HotelBooker.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
 namespace HotelBooker.Persistence.Repositories
@@ -23,8 +24,14 @@ namespace HotelBooker.Persistence.Repositories
         {
             try
             {
-                await _context.Database.EnsureDeletedAsync(ct);
-                await SeedAsync(ct);
+                if (await _context.Database.CanConnectAsync(ct))
+                {
+                    await _context.Bookings.ExecuteDeleteAsync(ct);
+                    await _context.Rooms.ExecuteDeleteAsync(ct);
+                    await _context.RoomTypes.ExecuteDeleteAsync(ct);
+                    await _context.Customers.ExecuteDeleteAsync(ct);
+                    await _context.Hotels.ExecuteDeleteAsync(ct);
+                }
             }
             catch (Exception ex)
             {
