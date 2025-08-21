@@ -16,6 +16,41 @@ namespace HotelBooker.Persistence.Repositories
         {
         }
 
+        public async Task<IReadOnlyCollection<Room>> FindByCapacityAsync
+        (
+            int capacity,
+            CancellationToken ct
+        )
+        {
+            try
+            {
+                return await _context
+                    .Rooms
+                    .Include(x => x.RoomType)
+                    .Include(x => x.Hotel)
+                    .Include(x => x.Bookings)
+                    .Where(x => x.MaxCapacity >= capacity)
+                    .Select(x => new Room
+                    {
+                        Id = x.Id,
+                        Number = x.Number,
+                        Description = x.Description,
+                        MaxCapacity = x.MaxCapacity,
+                        HotelId = x.HotelId,
+                        RoomTypeId = x.RoomTypeId,
+                        Hotel = x.Hotel,
+                        RoomType = x.RoomType,
+                        Bookings = x.Bookings.Where(x => x.StartDateUtc >= DateTime.UtcNow).ToList()
+                    })
+                    .ToListAsync(ct);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Unable to find by capacity.");
+                throw;
+            }
+        }
+
         public override async Task<Room?> FindByIdAsync(int id, CancellationToken ct)
         {
             try

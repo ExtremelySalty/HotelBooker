@@ -22,5 +22,31 @@
             set => _hotel = value;
         }
         public virtual List<Booking> Bookings { get; set; } = [];
+
+        public bool IsAvailable(DateTime startDate, DateTime endDate)
+        {
+            var requestedSlots = CalculateSlotsUsed(startDate, endDate);
+
+            var totalSlotsUsed = new List<int>();
+
+            foreach (var booking in Bookings)
+            {
+                totalSlotsUsed.AddRange(CalculateSlotsUsed(booking.StartDateUtc, booking.EndDateUtc));
+            }
+
+            return !totalSlotsUsed.Any(requestedSlots.Contains);
+        }
+
+        private static List<int> CalculateSlotsUsed(DateTime startDate, DateTime endDate)
+        {
+            var yearlyMultiplier = endDate.Year - startDate.Year;
+            var daysInYear = DateTime.IsLeapYear(startDate.Year) ? 366 : 365;
+            var endDayOfYear = endDate.DayOfYear + (yearlyMultiplier * daysInYear);
+            return Enumerable.Range
+            (
+                startDate.DayOfYear,
+                endDayOfYear - startDate.DayOfYear + 1
+            ).ToList();
+        }
     }
 }
