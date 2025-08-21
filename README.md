@@ -40,6 +40,7 @@ This project has been created in order to allow users to book a hotel room. This
 * Shouldly: used for the assertions for the tests
 * NSubstitute: used for mocking interfaces
 * Bogus: used for generating test data in the tests as well as the seed data
+* Aspire: used for running the project and provisioning a DB
 
 ## How to run
 
@@ -60,4 +61,4 @@ Please be aware that in order for the Repository and Integration tests to run yo
 
 ## Aspire Support
 
-This app does have Aspire support. It will spin up the project and the sql server for you if you set the App.Host as the start up project. In order to seed the data you will still need to naviagte to the swagger and hit the api/data/seed end point as detailed above. No need to add any conneciton strings Aspire will handle it for you. You do need to have Docker or Podman installed in order to use this feature though
+This app does have Aspire support. It will spin up the project and the sql server for you if you set the App.Host as the start up project. In order to seed the data you will still need to naviagte to the swagger and hit the api/data/seed end point as detailed above. No need to add any conneciton strings Aspire will handle it for you. You do need to have Docker or Podman installed in order to use this feature though. This will also persist data between sessions of the project running.
