@@ -12,20 +12,17 @@ namespace HotelBooker.WebApi.Controllers
     public class HotelsController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private readonly ILogger<HotelsController> _logger;
 
         public HotelsController
         (
-            IMediator mediator,
-            ILogger<HotelsController> logger
+            IMediator mediator
         )
         {
             _mediator = mediator;
-            _logger = logger;
         }
 
         [HttpGet]
-        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemsResultDto<HotelDto>))]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(PaginatedItemsResultDto<HotelDto>))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> GetHotelsAsync
         (
@@ -47,7 +44,7 @@ namespace HotelBooker.WebApi.Controllers
                 .Select(hotel => hotel.ToDto())
                 .ToList();
 
-            var response = new ItemsResultDto<HotelDto>
+            var response = new PaginatedItemsResultDto<HotelDto>
             (
                 result.Data.PageNumber,
                 result.Data.PageSize,

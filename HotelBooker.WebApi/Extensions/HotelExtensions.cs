@@ -15,7 +15,7 @@ namespace HotelBooker.WebApi.Extensions
                 [.. hotel.Rooms.Select(x => x.ToDto())]
             );
 
-        public static RoomDto ToDto(this Room room)
+        public static HotelRoomDto ToDto(this Room room)
             => new
             (
                 room.Id,

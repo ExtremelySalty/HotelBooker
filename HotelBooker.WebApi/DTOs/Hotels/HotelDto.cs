@@ -6,10 +6,10 @@
         string Name,
         string Location,
         string Code,
-        IReadOnlyCollection<RoomDto> Rooms
+        IReadOnlyCollection<HotelRoomDto> Rooms
     );
 
-    public record RoomDto
+    public record HotelRoomDto
     (
         int Id,
         string Number,

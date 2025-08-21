@@ -39,7 +39,7 @@ namespace HotelBooker.WebApi.Tests.Integration.Hotels
 
             // Assert
             response.StatusCode.ShouldBe(HttpStatusCode.OK);
-            var itemsResult = await DeserializeAsync<ItemsResultDto<HotelDto>>(response);
+            var itemsResult = await DeserializeAsync<PaginatedItemsResultDto<HotelDto>>(response);
             itemsResult.PageNumber.ShouldBe(pageNumber);
             itemsResult.PageSize.ShouldBe(pageSize);
             itemsResult.TotalItems.ShouldBe(24);

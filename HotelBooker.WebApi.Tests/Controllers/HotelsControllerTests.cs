@@ -7,7 +7,6 @@ using HotelBooker.WebApi.DTOs.Common;
 using HotelBooker.WebApi.DTOs.Hotels;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Shouldly;
 
@@ -19,15 +18,13 @@ namespace HotelBooker.WebApi.Tests.Controllers
     public class HotelsControllerTests
     {
         private IMediator _mediator;
-        private ILogger<HotelsController> _logger;
         private HotelsController _controller;
 
         [SetUp]
         public void SetUp()
         {
             _mediator = Substitute.For<IMediator>();
-            _logger = Substitute.For<ILogger<HotelsController>>();
-            _controller = new HotelsController(_mediator, _logger);
+            _controller = new HotelsController(_mediator);
         }
 
         [Test]
@@ -58,7 +55,7 @@ namespace HotelBooker.WebApi.Tests.Controllers
             var okResult = result as OkObjectResult;
             okResult.StatusCode.ShouldBe(200);
 
-            var itemsResult = okResult.Value.ShouldBeOfType<ItemsResultDto<HotelDto>>();
+            var itemsResult = okResult.Value.ShouldBeOfType<PaginatedItemsResultDto<HotelDto>>();
             itemsResult.PageNumber.ShouldBe(1);
             itemsResult.PageSize.ShouldBe(2);
             itemsResult.TotalItems.ShouldBe(1);
