@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HotelBooker.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250820144750_Initial")]
+    [Migration("20250821003031_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -36,9 +36,6 @@ namespace HotelBooker.Persistence.Migrations
                     b.Property<DateTime>("BookedOnUtc")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("CustomerId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndDateUtc")
                         .HasColumnType("datetime2");
 
@@ -55,35 +52,12 @@ namespace HotelBooker.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CustomerId");
-
                     b.HasIndex("ReferenceNumber")
                         .IsUnique();
 
                     b.HasIndex("RoomId");
 
                     b.ToTable("Booking", (string)null);
-                });
-
-            modelBuilder.Entity("HotelBooker.Domain.Models.Customer", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Customer", (string)null);
                 });
 
             modelBuilder.Entity("HotelBooker.Domain.Models.Hotel", b =>
@@ -167,19 +141,11 @@ namespace HotelBooker.Persistence.Migrations
 
             modelBuilder.Entity("HotelBooker.Domain.Models.Booking", b =>
                 {
-                    b.HasOne("HotelBooker.Domain.Models.Customer", "Customer")
-                        .WithMany("Bookings")
-                        .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("HotelBooker.Domain.Models.Room", "Room")
                         .WithMany("Bookings")
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Customer");
 
                     b.Navigation("Room");
                 });
@@ -201,11 +167,6 @@ namespace HotelBooker.Persistence.Migrations
                     b.Navigation("Hotel");
 
                     b.Navigation("RoomType");
-                });
-
-            modelBuilder.Entity("HotelBooker.Domain.Models.Customer", b =>
-                {
-                    b.Navigation("Bookings");
                 });
 
             modelBuilder.Entity("HotelBooker.Domain.Models.Hotel", b =>

@@ -26,11 +26,6 @@ namespace HotelBooker.Persistence.EntityConfigurations
                 .HasOne(x => x.Room)
                 .WithMany(x => x.Bookings)
                 .HasForeignKey(x => x.RoomId);
-
-            builder
-                .HasOne(x => x.Customer)
-                .WithMany(x => x.Bookings)
-                .HasForeignKey(x => x.CustomerId);
         }
     }
 }

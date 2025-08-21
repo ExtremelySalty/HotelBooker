@@ -30,7 +30,6 @@ namespace HotelBooker.Persistence.Repositories
                     await _context.Bookings.ExecuteDeleteAsync(ct);
                     await _context.Rooms.ExecuteDeleteAsync(ct);
                     await _context.RoomTypes.ExecuteDeleteAsync(ct);
-                    await _context.Customers.ExecuteDeleteAsync(ct);
                     await _context.Hotels.ExecuteDeleteAsync(ct);
                 }
             }
@@ -55,11 +54,13 @@ namespace HotelBooker.Persistence.Repositories
                 }
                 if (await _context.Hotels.AnyAsync(ct) == false)
                 {
-                    await _context.AddRangeAsync(GenerateHotels(hotelsToSeed, roomTypes.Select(x => x.Id)), cancellationToken: ct);
-                }
-                if(await _context.Customers.AnyAsync(ct) == false)
-                {
-                    await _context.AddRangeAsync(GenerateCustomers(), cancellationToken: ct);
+                    await _context.AddRangeAsync
+                    (
+                        GenerateHotels
+                        (
+                            hotelsToSeed,
+                            roomTypes.Select(x => x.Id)
+                        ), cancellationToken: ct);
                 }
                 await _context.SaveChangesAsync(ct);
             }
@@ -78,19 +79,50 @@ namespace HotelBooker.Persistence.Repositories
                 new RoomType() { Name = "Deluxe" }
             ];
 
-        private static List<Hotel> GenerateHotels(int hotelsToSeed, IEnumerable<int> roomTypes)
+        private static List<Hotel> GenerateHotels
+        (
+            int hotelsToSeed,
+            IEnumerable<int> roomTypes
+        )
         {
+            // for the hotels in each of them do a room with the following bookings
+            // 10 days within the same month: 2nd to the 12th
+            // 10 days overlapping months: 25th to the 5th
+            // 10 days overlapping years: 31st/year to the 9th/year+1
             var roomFaker = new RoomFaker(1297, roomTypes);
             var hotelFaker = new HotelFaker(1297, roomFaker);
-            return hotelFaker.Generate(hotelsToSeed);
-        }
+            var hotels = hotelFaker.Generate(hotelsToSeed);
+            var rng = new Random();
+            var bookings = new List<Booking>
+            {
+                new()
+                {
+                    StartDateUtc = new DateTime(2025, 8, 20),
+                    EndDateUtc = new DateTime(2025, 8, 30),
+                    ReferenceNumber = Guid.NewGuid().ToString(),
+                    BookedOnUtc = DateTime.UtcNow
+                },
+                new()
+                {
+                    StartDateUtc = new DateTime(2025, 10, 25),
+                    EndDateUtc = new DateTime(2025, 11, 4),
+                    ReferenceNumber = Guid.NewGuid().ToString(),
+                    BookedOnUtc = DateTime.UtcNow
+                },
+                new()
+                {
+                    StartDateUtc = new DateTime(2025, 12, 25),
+                    EndDateUtc = new DateTime(2026, 1, 4),
+                    ReferenceNumber = Guid.NewGuid().ToString(),
+                    BookedOnUtc = DateTime.UtcNow
+                },
+            };
 
-        private static List<Customer> GenerateCustomers()
-            =>
-            [
-                new() { Name = "David Jason", Email = "david@touchfrost.com" },
-                new() { Name = "Alan Davies", Email = "jonathon@creek.com" },
-                new() { Name = "Sherlock Holmes", Email = "Sherlock@hounds.com" }
-            ];
+            foreach (var hotel in hotels)
+            {
+                hotel.Rooms.First().Bookings = bookings;
+            }
+            return hotels;
+        }
     }
 }

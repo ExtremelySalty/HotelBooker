@@ -6,7 +6,6 @@ namespace HotelBooker.Persistence
     public class ApplicationDbContext(DbContextOptions options) : DbContext(options)
     {
         public DbSet<Booking> Bookings => Set<Booking>();
-        public DbSet<Customer> Customers => Set<Customer>();
         public DbSet<Hotel> Hotels => Set<Hotel>();
         public DbSet<Room> Rooms => Set<Room>();
         public DbSet<RoomType> RoomTypes => Set<RoomType>();
