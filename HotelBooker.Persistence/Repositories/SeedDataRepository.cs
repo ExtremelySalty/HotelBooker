@@ -85,14 +85,9 @@ namespace HotelBooker.Persistence.Repositories
             IEnumerable<int> roomTypes
         )
         {
-            // for the hotels in each of them do a room with the following bookings
-            // 10 days within the same month: 2nd to the 12th
-            // 10 days overlapping months: 25th to the 5th
-            // 10 days overlapping years: 31st/year to the 9th/year+1
             var roomFaker = new RoomFaker(1297, roomTypes);
             var hotelFaker = new HotelFaker(1297, roomFaker);
             var hotels = hotelFaker.Generate(hotelsToSeed);
-            var rng = new Random();
             var bookings = new List<Booking>
             {
                 new()
