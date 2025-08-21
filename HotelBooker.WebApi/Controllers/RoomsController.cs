@@ -20,7 +20,7 @@ namespace HotelBooker.WebApi.Controllers
 
         [HttpGet]
         [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ItemsResultDto<AvailableRoomDto>))]
-        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ValidationProblemDetails))]
         [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ProblemDetails))]
         public async Task<IActionResult> GetAvailableRoomsAsync
         (
@@ -30,7 +30,7 @@ namespace HotelBooker.WebApi.Controllers
             CancellationToken ct
         )
         {
-            if (startDate <= endDate)
+            if (startDate >= endDate)
                 return BadRequest();
 
             var request = new FindAvailableRoomsRequest(capacity, startDate, endDate);

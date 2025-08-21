@@ -1,7 +1,8 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
 var sql = builder.AddSqlServer("sql")
-                 .WithLifetime(ContainerLifetime.Session);
+                 .WithLifetime(ContainerLifetime.Session)
+                 .WithDataVolume();
 
 var db = sql.AddDatabase("ApiHotelBoooker");
 

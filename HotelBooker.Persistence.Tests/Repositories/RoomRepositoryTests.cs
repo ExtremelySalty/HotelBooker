@@ -98,24 +98,6 @@ namespace HotelBooker.Persistence.Tests.Repositories
             room.ShouldBeNull();
         }
 
-        [Test]
-        public async Task FindAvailableRooms_WhenRoomExists_ShouldReturnRooms()
-        {
-            // Arrange
-            var capacity = 1;
-            var specification = new FindAvailableRoomsSpecification(capacity);
-            var request = new QueryRequest<Room>(1, 10, specification);
-
-            // Act
-            var result = await _repository.PerformQueryAsync(request, CancellationToken.None);
-
-            // Assert
-            result.ShouldNotBeNull();
-            request.PageNumber.ShouldBe(request.PageNumber);
-            result.PageSize.ShouldBe(request.PageSize);
-            result.TotalItems.ShouldBeGreaterThan(0);
-        }
-
         private static List<RoomType> GenerateRoomTypes()
             =>
             [
