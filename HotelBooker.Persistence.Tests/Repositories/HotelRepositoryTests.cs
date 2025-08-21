@@ -7,7 +7,6 @@ using HotelBooker.Persistence.Tests.Specifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Org.BouncyCastle.Crypto.Prng;
 using Shouldly;
 using Testcontainers.MsSql;
 
@@ -84,7 +83,7 @@ namespace HotelBooker.Persistence.Tests.Repositories
             var hotel = await _repository.FindByIdAsync(hotelId, CancellationToken.None);
 
             // Assert
-            hotel.ShouldBeNull();;
+            hotel.ShouldBeNull(); ;
         }
 
         [Test]
@@ -115,7 +114,7 @@ namespace HotelBooker.Persistence.Tests.Repositories
 
         private List<Hotel> GenerateHotels()
         {
-            _roomFaker = new RoomFaker(_seed, [1,2,3]);
+            _roomFaker = new RoomFaker(_seed, [1, 2, 3]);
             _hotelFaker = new HotelFaker(_seed, _roomFaker);
             return _hotelFaker.Generate(_hotelsToGenerate);
         }
